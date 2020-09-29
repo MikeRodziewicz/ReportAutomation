@@ -1,5 +1,6 @@
 from FileManagement.file_management import Date_Stamps
 import pandas as pd
+import os
 
 
 class DataFrameProd():
@@ -16,10 +17,6 @@ class DataFrameProd():
         sip_writer = pd.read_excel(f'{self.location}/STP_MAP.xlsx')
         with_stp = pd.DataFrame(sip_writer[['Assignment Group', 'STP']])
         return with_stp
-
-
-df1 = DataFrameProd().df_creation()
-print(df1.columns)
 
 
 class Daily_Report(Date_Stamps):

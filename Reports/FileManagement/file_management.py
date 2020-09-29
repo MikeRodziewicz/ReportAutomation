@@ -3,6 +3,16 @@ import pandas as pd
 from datetime import date, timedelta
 from openpyxl import load_workbook
 import shutil
+from pathlib import Path
+
+
+class FileNames():
+
+    directory = None
+
+    def working_dir(self):
+        directory = str(Path.home())
+        return directory
 
 
 class Date_Stamps():
