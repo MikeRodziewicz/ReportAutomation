@@ -5,9 +5,9 @@ from FileManagement.file_management import (
 
 #
 # def main():
-#     main_folder_creation()
-#     folder_creation(dst)
-#     copy_template(templates_repo, dst)
+main_folder_creation()
+folder_creation(dst)
+copy_template(templates_repo, dst)
 #     df1 = DataFrameProd().df_creation()
 #     stps = DataFrameProd().stp_mapping()
 #     base = Daily_Report(df1, stps).make_daily_base()

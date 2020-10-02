@@ -46,8 +46,10 @@ class Date_Stamps():
 
 
 current_date = Date_Stamps().get_today()
+yesterday = Date_Stamps().get_yesterday()
+location = FileNames().working_dir()
 
-dst = f'/home/mike/CSAT_Reports/{current_date} reports'
+dst = f'{location}/CSAT_Reports/{current_date} reports'
 templates_repo = ['/home/mike/github/ReportAutomation/Reports/ReportTemplates/daily_template.xlsx',
                   '/home/mike/github/ReportAutomation/Reports/ReportTemplates/report_maker.xlsx']
 
@@ -68,28 +70,32 @@ def copy_template(template, destination):
         shutil.copy2(item, destination)
     os.rename(
         f'{dst}/daily_template.xlsx',
-        f'{dst}/CSAT Daily HS {current_date}.xlsx', )
+        f'{dst}/CSAT Daily HS {yesterday}.xlsx', )
     os.rename(
         f'{dst}/report_maker.xlsx',
         f'{dst}/report_maker {current_date}.xlsx', )
 
 
-def write_daily_report(data):
-    book = load_workbook(f'{dst}/CSAT Daily HS {current_date}.xlsx')
-    writer = pd.ExcelWriter(f'{dst}/CSAT Daily HS {current_date}.xlsx',
-                            engine='openpyxl', mode='a')
-    writer.book = book
-    writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
-    data.to_excel(writer, sheet_name='Negative Comments', startrow=1, index=False, header=False)
-    writer.save()
-
-
-def write_daily_report_maker(data, data_1):
-    book = load_workbook(f'{dst}/report_maker {current_date}.xlsx')
-    writer = pd.ExcelWriter(f'{dst}/report_maker {current_date}.xlsx', engine='openpyxl', mode='a')
-    writer.book = book
-    writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
-    data.to_excel(writer, sheet_name='Formulas&Pivots', startrow=1, index=False, header=False)
-    data_1.to_excel(writer, sheet_name='Formulas&Pivots', startrow=1,
-                    startcol=7, index=False, header=False)
-    writer.save()
+main_folder_creation()
+folder_creation(dst)
+copy_template(templates_repo, dst)
+#
+# def write_daily_report(data):
+#     book = load_workbook(f'{dst}/CSAT Daily HS {current_date}.xlsx')
+#     writer = pd.ExcelWriter(f'{dst}/CSAT Daily HS {current_date}.xlsx',
+#                             engine='openpyxl', mode='a')
+#     writer.book = book
+#     writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
+#     data.to_excel(writer, sheet_name='Negative Comments', startrow=1, index=False, header=False)
+#     writer.save()
+#
+#
+# def write_daily_report_maker(data, data_1):
+#     book = load_workbook(f'{dst}/report_maker {current_date}.xlsx')
+#     writer = pd.ExcelWriter(f'{dst}/report_maker {current_date}.xlsx', engine='openpyxl', mode='a')
+#     writer.book = book
+#     writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
+#     data.to_excel(writer, sheet_name='Formulas&Pivots', startrow=1, index=False, header=False)
+#     data_1.to_excel(writer, sheet_name='Formulas&Pivots', startrow=1,
+#                     startcol=7, index=False, header=False)
+#     writer.save()

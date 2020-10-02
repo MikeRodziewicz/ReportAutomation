@@ -44,8 +44,9 @@ class Daily_Report(Date_Stamps):
 
     def make_daily_dsr_one(self, data_frame):
         report = pd.DataFrame(data_frame[['Created', 'Score', 'STP']])
-        filt = (report['Created'] >= str(self.count_in_weekend()))
-        report = report.loc[filt]
+        if self.get_today() == self.get_start_month:
+            filt = (report['Created'] >= str(self.count_in_weekend()))
+            report = report.loc[filt]
         filt_2 = (report['Created'] < str(self.get_today()))
         report = report.loc[filt_2]
         report = pd.DataFrame(report[['Score', 'STP']])
